@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4"></script>
+    <title>Charts</title>
+</head>
+<body>
+<script type="text/javascript">
+    function render(renderInput) {
+        let height = 576;
+        let width = 1024;
+        let marginLeft = 100;
+        let marginRight = 50;
+        const data = JSON.parse(renderInput);
+
+        function createChartDic(id) {
+            let div = document.createElement("div");
+            div.id = id
+            div.style.textAlign = "center"
+            div.style.margin = "0 auto"
+            div.style.width = `${width + marginLeft + marginRight}px`
+            return div;
+        }
+
+        for (let idx in data) {
+            let benchResults = data[idx]
+            let div = createChartDic(benchResults.ID);
+            div.innerHTML = `<p style="font-family: sans-serif;text-align: center;">${benchResults.Options.title || benchResults.Name}</p>`
+            div.append(Plot.plot({
+                marginLeft: marginLeft,
+                marginRight: marginRight,
+                width: width,
+                height: height,
+                x: {
+                    label: benchResults.Options.xAxisName || 'X',
+                    grid: true,
+                    type: benchResults.Options.xAxisType || 'linear'
+                },
+                y: {
+                    label: `${benchResults.YAxisLabel}`,
+                    grid: true,
+                    type: benchResults.Options.yAxisType || 'linear'
+                },
+                color: {
+                    legend: true,
+                },
+                marks: Object.entries(benchResults.Cases).flatMap(([caseName, caseData]) => {
+                    caseData.forEach(point => {
+                        point.Error = parseFloat(point.Error)
+                        point.X = parseFloat(point.X)
+                        point.Y = parseFloat(point.Y)
+                        point.YOne = point.Y - point.Error - 0.00000001
+                        point.YTwo = point.Y + point.Error + 0.00000001
+                        point.Name = caseName
+                    });
+                    return [
+                        Plot.line(caseData, {x: "X", y: "Y", stroke: "Name", strokeOpacity: 0.5}),
+                        Plot.area(caseData, {
+                            x1: "X",
+                            y1: "YOne",
+                            y2: "YTwo",
+                            fill: "Name",
+                            fillOpacity: 0.5
+                        }),
+                        Plot.dot(caseData, {x: "X", y: "Y", fill: "Name"}),
+                        Plot.ruleY([0]), Plot.ruleX([0])];
+                })
+            }));
+            div.append(document.createElement("hr"))
+            document.body.append(div);
+        }
+    }
+
+    const input = `goCLIInput`;
+    render(input)
+</script>
+</body>
+</html>
