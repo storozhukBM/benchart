@@ -1,13 +1,13 @@
 coverage: test
 	go tool cover -html=coverage.out
 
-test: clean
+test: clean format
 	go test -race -coverprofile coverage.out ./...
 
 lint: clean
 	go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.46.2 run .
 
-clean: format
+clean:
 	@go clean
 	@rm -f profile.out
 	@rm -f coverage.out
