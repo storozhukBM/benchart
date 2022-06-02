@@ -347,7 +347,7 @@ example:
 > benchart input.csv result.html
 
 you can also specify some options for charts with name of the chart at the beginning:
-> benchart 'PoolOverhead;xAxisName=Number of tasks;xAxisType=log' input.csv result.html
+> benchart 'PoolOverhead;title=Overhead;xAxisName=Number of tasks;xAxisType=log;yAxisType=log' input.csv result.html
 
 list of supported chart options: `
 
