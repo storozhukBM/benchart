@@ -1,0 +1,22 @@
+name: build
+on: [push]
+jobs:
+  test:
+    strategy:
+      matrix:
+        go-version: [1.18.x]
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Verify
+        run: make test
+        shell: bash
+      - name: Verify
+        run: make lint
+        shell: bash
