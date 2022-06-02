@@ -1,4 +1,4 @@
-# benchart [![Build Status](https://github.com/storozhukBM/benchart/workflows/build/badge.svg)](https://github.com/storozhukBM/benchart/actions)  [![Go Report Card](https://goreportcard.com/badge/github.com/storozhukBM/benchart)](https://goreportcard.com/report/github.com/storozhukBM/benchart) [![PkgGoDev](https://pkg.go.dev/badge/github.com/storozhukBM/benchart)](https://pkg.go.dev/github.com/storozhukBM/benchart)
+# benchart [![Build Status](https://github.com/storozhukBM/benchart/workflows/Go/badge.svg)](https://github.com/storozhukBM/benchart/actions)  [![Go Report Card](https://goreportcard.com/badge/github.com/storozhukBM/benchart)](https://goreportcard.com/report/github.com/storozhukBM/benchart) [![PkgGoDev](https://pkg.go.dev/badge/github.com/storozhukBM/benchart)](https://pkg.go.dev/github.com/storozhukBM/benchart)
 
 benchart is a tool that takes [benchstat -csv](https://pkg.go.dev/golang.org/x/perf/cmd/benchstat#section-readme)
 output as an input and plots results of your benchmark in a html file.
